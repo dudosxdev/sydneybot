@@ -4,7 +4,7 @@ export class GPT4 {
     constructor(apikey) {
         this.apikey = apikey;
         this.headers = {
-            "Authorization": `Bearer ${apikey}`,
+            "Authorization": apikey,
             "Content-Type": "application/json"
         };
     }
@@ -25,7 +25,7 @@ export class GPT4 {
         try {
             let reply = '';
             const controller = new AbortController();
-            const response = await fetchEventSource('https://api.openai.com/v1/chat/completions', {
+            const response = await fetchEventSource('https://не-твоё-дело.понос.орг.рус/v1/chat', {
                 ...options,
                 signal: controller.signal,
                 onmessage: (message) => {
@@ -33,7 +33,7 @@ export class GPT4 {
                         controller.abort();
                         return;
                     }
-                    const data = JSON.parse(message.data).choices[0].delta.content || '';
+                    const data = JSON.parse(message.data).reply || '';
                     reply += data;
                     if (onupdate) {
                         onupdate(data);
@@ -55,7 +55,7 @@ export class ChatGPT {
     constructor(apikey) {
         this.apikey = apikey;
         this.headers = {
-            "Authorization": `Bearer ${apikey}`,
+            "Authorization": apikey,
             "Content-Type": "application/json"
         };
     }
@@ -76,7 +76,7 @@ export class ChatGPT {
         try {
             let reply = '';
             const controller = new AbortController();
-            const response = await fetchEventSource('https://api.openai.com/v1/chat/completions', {
+            const response = await fetchEventSource('https://не-твоё-дело.понос.орг.рус/v1/chat', {
                 ...options,
                 signal: controller.signal,
                 onmessage: (message) => {
@@ -84,7 +84,7 @@ export class ChatGPT {
                         controller.abort();
                         return;
                     }
-                    const data = JSON.parse(message.data).choices[0].delta.content || '';
+                    const data = JSON.parse(message.data).reply || '';
                     reply += data;
                     if (onupdate) {
                         onupdate(data);
